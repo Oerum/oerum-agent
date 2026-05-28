@@ -125,12 +125,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if gh release view "${GITHUB_REF_NAME}" --json isDraft >/tmp/release.json 2>/dev/null; then
+          if is_draft="$(gh release view "${GITHUB_REF_NAME}" --json isDraft --jq '.isDraft' 2>/dev/null)"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "is_draft=$(jq -r '.isDraft' /tmp/release.json)" >> "$GITHUB_OUTPUT"
+            echo "is_draft=$is_draft" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "is_draft=true" >> "$GITHUB_OUTPUT"
+            echo "is_draft=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload release assets

@@ -7,6 +7,34 @@ log, and the sync configuration with concrete remediation hints.
 
 Run `brain init` in the repository root.
 
+## Bootstrap install fails with 404 on release asset
+
+If `install/bootstrap.ps1` or `install/bootstrap.sh` reports `Not Found`
+for `releases/latest/download/brain-...`, there is no published release
+asset for your platform yet.
+
+Maintainer fix:
+- Publish a GitHub release containing the platform archive and `.sha256`
+  checksum file.
+
+Local fallback:
+
+```sh
+cargo install --path crates/brain-cli --locked --root "$HOME/.brain"
+```
+
+On Windows PowerShell:
+
+```powershell
+cargo install --path crates/brain-cli --locked --root "$HOME/.brain"
+```
+
+Then ensure your shell includes `$HOME/.brain/bin` on `PATH`, and run:
+
+```sh
+brain init
+```
+
 ## `brain sync` reports not configured
 
 Create `.brain/sync.json` with `bucket`, `prefix`, and `region` fields.

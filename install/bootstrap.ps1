@@ -21,8 +21,33 @@ $TmpSum      = Join-Path $env:TEMP "$Archive.sha256"
 New-Item -ItemType Directory -Path $DestDir -Force | Out-Null
 
 Write-Host "Downloading $Url"
-Invoke-WebRequest -Uri $Url -OutFile $Tmp -UseBasicParsing
-Invoke-WebRequest -Uri $ChecksumUrl -OutFile $TmpSum -UseBasicParsing
+try {
+  Invoke-WebRequest -Uri $Url -OutFile $Tmp -UseBasicParsing
+  Invoke-WebRequest -Uri $ChecksumUrl -OutFile $TmpSum -UseBasicParsing
+} catch {
+  $StatusCode = $null
+  if ($_.Exception.Response -and $_.Exception.Response.StatusCode) {
+    $StatusCode = [int]$_.Exception.Response.StatusCode
+  }
+
+  if ($StatusCode -eq 404) {
+    throw @"
+Release asset not found at:
+  $Url
+
+No matching GitHub release asset is currently published.
+
+Maintainer path:
+  Publish a release containing '$Archive' and '$Archive.sha256'.
+
+Local fallback:
+  cargo install --path crates/brain-cli --locked --root "$DestDir"
+  Then run: brain init
+"@
+  }
+
+  throw
+}
 
 $ExpectedLine = (Get-Content $TmpSum | Select-Object -First 1).Trim()
 if (-not $ExpectedLine) {

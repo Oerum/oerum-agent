@@ -28,8 +28,33 @@ trap 'rm -rf "$TMP"' EXIT
 mkdir -p "$DEST"
 
 echo "Downloading ${URL}"
-curl -fsSL "$URL"      -o "${TMP}/${ARCHIVE}"
-curl -fsSL "$SUM_URL"  -o "${TMP}/${ARCHIVE}.sha256"
+if ! curl -fsSL "$URL" -o "${TMP}/${ARCHIVE}"; then
+  cat >&2 <<EOF
+Release asset not found at:
+  ${URL}
+
+No matching GitHub release asset is currently published.
+
+Maintainer path:
+  Publish a release containing '${ARCHIVE}' and '${ARCHIVE}.sha256'.
+
+Local fallback:
+  cargo install --path crates/brain-cli --locked --root "${HOME}/.brain"
+  Then run: brain init
+EOF
+  exit 1
+fi
+
+if ! curl -fsSL "$SUM_URL" -o "${TMP}/${ARCHIVE}.sha256"; then
+  cat >&2 <<EOF
+Release checksum file not found at:
+  ${SUM_URL}
+
+Publish '${ARCHIVE}.sha256' with the release, or install locally:
+  cargo install --path crates/brain-cli --locked --root "${HOME}/.brain"
+EOF
+  exit 1
+fi
 
 EXPECTED="$(awk '{print tolower($1)}' "${TMP}/${ARCHIVE}.sha256")"
 if [ -z "$EXPECTED" ]; then

@@ -1,0 +1,12 @@
+[package]
+name = "brain-adapters"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+brain-core = { path = "../brain-core" }
+
+[dev-dependencies]
+tempfile.workspace = true

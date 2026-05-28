@@ -1,0 +1,16 @@
+{
+  "name": "brain",
+  "channels": {
+    "direct": {
+      "windows": "install/bootstrap.ps1",
+      "unix": "install/bootstrap.sh"
+    }
+  },
+  "artifacts": [
+    "brain-windows-x64.zip",
+    "brain-linux-x64.tar.gz",
+    "brain-linux-arm64.tar.gz",
+    "brain-darwin-x64.tar.gz",
+    "brain-darwin-arm64.tar.gz"
+  ]
+}

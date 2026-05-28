@@ -1,0 +1,18 @@
+[package]
+name = "brain-cli"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "brain"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+serde_json.workspace = true
+tracing-subscriber.workspace = true
+tokio.workspace = true
+brain-core = { path = "../brain-core" }
+brain-adapters = { path = "../brain-adapters" }
+brain-sync = { path = "../brain-sync" }

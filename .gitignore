@@ -1,0 +1,16 @@
+/target/
+/.brain/sessions/
+/.brain/locks/
+/.brain/tmp/
+/.brain/snapshot.json.tmp.*
+/.brain/events/*.json.tmp.*
+/.DS_Store
+Thumbs.db
+*.log
+*.tmp
+# Local AI tool state — never commit these.
+/.antigravitycli/
+/.gemini/
+/.cursor/
+/.claude/
+/diff*.txt

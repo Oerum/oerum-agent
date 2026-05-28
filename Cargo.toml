@@ -1,0 +1,31 @@
+[workspace]
+members = [
+  "crates/brain-cli",
+  "crates/brain-core",
+  "crates/brain-adapters",
+  "crates/brain-sync",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+license = "MIT"
+authors = ["Oerum Technologies"]
+
+[workspace.dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde", "clock"] }
+tracing-subscriber = { version = "0.3", features = ["fmt"] }
+tempfile = "3"
+aes-gcm = "0.10"
+rand = "0.8"
+aws-config = "1"
+aws-sdk-s3 = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+fs4 = { version = "1", features = ["sync"] }
+argon2 = "0.5"

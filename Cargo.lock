@@ -675,7 +675,7 @@ dependencies = [
 
 [[package]]
 name = "brain-adapters"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "brain-core",
@@ -685,7 +685,7 @@ dependencies = [
 
 [[package]]
 name = "brain-cli"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "brain-adapters",
@@ -702,7 +702,7 @@ dependencies = [
 
 [[package]]
 name = "brain-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "chrono",
@@ -715,7 +715,7 @@ dependencies = [
 
 [[package]]
 name = "brain-sync"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "aes-gcm",
  "anyhow",

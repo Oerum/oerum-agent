@@ -1,9 +1,5 @@
 /target/
-/.brain/sessions/
-/.brain/locks/
-/.brain/tmp/
-/.brain/snapshot.json.tmp.*
-/.brain/events/*.json.tmp.*
+/.brain/
 /.DS_Store
 Thumbs.db
 *.log

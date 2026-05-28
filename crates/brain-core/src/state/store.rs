@@ -14,15 +14,7 @@ use super::events::{EventKind, StateEvent};
 use super::migrate::ensure_supported;
 use super::schema::{CommandResult, ResumeBrief, StateSnapshot, SNAPSHOT_HISTORY_CAP};
 
-/// Generic event payload emitted by tool-specific adapters (Cursor, Claude, ...).
-/// Re-declared here as a trait-free struct so `brain-core` does not depend on
-/// `brain-adapters`. Adapter crates can `From`/`Into` between their type and this.
-#[derive(Debug, Clone)]
-pub struct AdapterEventRef<'a> {
-    pub tool: &'a str,
-    pub action: &'a str,
-    pub note: &'a str,
-}
+
 
 #[derive(Debug, Clone)]
 pub struct BrainStore {
@@ -126,12 +118,7 @@ impl BrainStore {
         })
     }
 
-    /// Persist an adapter `(tool, action, note)` triple as a decision-typed
-    /// entry, formatted as `[tool:action] note`.
-    pub fn record_adapter_event(&self, event: &AdapterEventRef<'_>) -> Result<CommandResult> {
-        let formatted = format!("[{}:{}] {}", event.tool, event.action, event.note);
-        self.record_decision(formatted)
-    }
+
 
     pub fn resume(&self) -> Result<ResumeBrief> {
         let snapshot = self.load_snapshot()?;

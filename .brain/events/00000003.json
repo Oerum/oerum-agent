@@ -1,8 +1,0 @@
-{
-  "seq": 3,
-  "at": "2026-05-28T10:43:00.832880900Z",
-  "kind": {
-    "type": "Checkpoint",
-    "note": "Auto-checkpoint from Cursor stop hook"
-  }
-}

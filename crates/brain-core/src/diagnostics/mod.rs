@@ -88,7 +88,9 @@ pub fn run_diagnostics(repo_root: &Path) -> Vec<DiagnosticResult> {
 
     let events_dir = brain_dir.join("events");
     if events_dir.exists() {
-        let count = std::fs::read_dir(&events_dir).map(|d| d.count()).unwrap_or(0);
+        let count = std::fs::read_dir(&events_dir)
+            .map(|d| d.count())
+            .unwrap_or(0);
         out.push(ok("event log", format!("{count} events on disk")));
     } else {
         out.push(warn(

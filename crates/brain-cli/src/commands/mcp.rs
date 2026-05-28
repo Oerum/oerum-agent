@@ -5,16 +5,21 @@ use std::sync::Arc;
 use anyhow::{Context, Result};
 use brain_core::{git::link::git_head, BrainStore};
 use rmcp::{
-    handler::server::{wrapper::Parameters, router::tool::ToolRouter},
-    model::{CallToolResult, Content, ErrorCode, ErrorData as McpError, ServerCapabilities, ServerInfo},
+    handler::server::{router::tool::ToolRouter, wrapper::Parameters},
+    model::{
+        CallToolResult, Content, ErrorCode, ErrorData as McpError, ServerCapabilities, ServerInfo,
+    },
     schemars::JsonSchema,
-    tool, tool_handler, tool_router, transport::stdio, ServerHandler, ServiceExt,
+    tool, tool_handler, tool_router,
+    transport::stdio,
+    ServerHandler, ServiceExt,
 };
 use serde::Deserialize;
 
 #[derive(Clone)]
 pub struct BrainMcp {
     store: Arc<BrainStore>,
+    #[allow(dead_code)] // used by #[tool_handler] via rmcp macros
     tool_router: ToolRouter<Self>,
 }
 
@@ -71,13 +76,10 @@ impl BrainMcp {
 impl BrainMcp {
     #[tool(description = "Print the shared handoff brief for the current repository scope.")]
     async fn brain_resume(&self) -> Result<CallToolResult, McpError> {
-        let brief = self
-            .run_store(|store| store.resume())
-            .await?;
-        let task = brief
-            .active_task
-            .unwrap_or_else(|| "<none>".to_string());
-        let mut text = format!("# oerum-agent handoff\n\n**Active task:** {task}\n\n**Recent decisions:**\n");
+        let brief = self.run_store(|store| store.resume()).await?;
+        let task = brief.active_task.unwrap_or_else(|| "<none>".to_string());
+        let mut text =
+            format!("# oerum-agent handoff\n\n**Active task:** {task}\n\n**Recent decisions:**\n");
         if brief.top_decisions.is_empty() {
             text.push_str("- (none)\n");
         } else {
@@ -127,11 +129,7 @@ impl BrainMcp {
         &self,
         Parameters(args): Parameters<TaskArgs>,
     ) -> Result<CallToolResult, McpError> {
-        let value = if args.clear {
-            None
-        } else {
-            args.title
-        };
+        let value = if args.clear { None } else { args.title };
         if !args.clear && value.is_none() {
             return Err(McpError {
                 code: ErrorCode::INVALID_PARAMS,
@@ -152,10 +150,7 @@ impl BrainMcp {
     async fn brain_scope(&self) -> Result<CallToolResult, McpError> {
         let root = self.repo_root().display().to_string();
         let brain_dir = self.repo_root().join(".brain").display().to_string();
-        let snapshot = self
-            .run_store(|store| store.load_snapshot())
-            .await
-            .ok();
+        let snapshot = self.run_store(|store| store.load_snapshot()).await.ok();
         let git = snapshot
             .and_then(|s| s.git_head)
             .or_else(|| git_head(self.repo_root()));

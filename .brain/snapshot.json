@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "active_task": null,
+  "decisions": [
+    "Auto-checkpoint from Cursor stop hook"
+  ],
+  "artifacts": [],
+  "git_head": "01d44834de86ea0f4040ab34a20708b6bcca829a",
+  "updated_at": "2026-05-28T10:43:00.835756400Z",
+  "last_event_seq": 3
+}

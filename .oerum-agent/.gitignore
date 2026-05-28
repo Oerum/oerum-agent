@@ -1,0 +1,6 @@
+# Verbose per-session checkpoints (hybrid tracking)
+sessions/
+*.lock
+*.tmp
+
+# Keep committed: state.json, meta.json, handoff.md, config.json, focus.json

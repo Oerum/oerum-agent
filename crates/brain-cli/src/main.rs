@@ -1,4 +1,5 @@
 mod commands;
+mod install;
 
 use std::path::PathBuf;
 
@@ -14,7 +15,17 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    Install,
+    /// Install CLI and register MCP config for coding agents.
+    Install {
+        /// Skip MCP registration and config snippet output.
+        #[arg(long)]
+        no_mcp: bool,
+        /// Skip writing ~/.cursor/mcp.json.
+        #[arg(long)]
+        skip_cursor_mcp: bool,
+    },
+    /// Run the Model Context Protocol server on stdio.
+    Mcp,
     Init,
     Resume,
     Checkpoint {
@@ -45,7 +56,11 @@ async fn main() -> Result<()> {
     let cli = Cli::parse();
     let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
     match cli.command {
-        Command::Install => commands::install::run(&cwd)?,
+        Command::Install {
+            no_mcp,
+            skip_cursor_mcp,
+        } => install::run(&cwd, !no_mcp, skip_cursor_mcp)?,
+        Command::Mcp => commands::mcp::run_stdio().await?,
         Command::Init => commands::init::run(&cwd)?,
         Command::Resume => commands::resume::run(&cwd)?,
         Command::Checkpoint { note } => commands::checkpoint::run(&cwd, note)?,

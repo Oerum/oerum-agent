@@ -5,7 +5,7 @@ use std::sync::Arc;
 use anyhow::{Context, Result};
 use brain_core::{git::link::git_head, BrainStore};
 use rmcp::{
-    handler::server::router::tool::{Parameters, ToolRouter},
+    handler::server::{wrapper::Parameters, router::tool::ToolRouter},
     model::{CallToolResult, Content, ErrorCode, ErrorData as McpError, ServerCapabilities, ServerInfo},
     schemars::JsonSchema,
     tool, tool_handler, tool_router, transport::stdio, ServerHandler, ServiceExt,

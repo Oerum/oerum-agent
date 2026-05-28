@@ -19,6 +19,7 @@ use serde::Deserialize;
 #[derive(Clone)]
 pub struct BrainMcp {
     store: Arc<BrainStore>,
+    #[allow(dead_code)] // used by #[tool_handler] via rmcp macros
     tool_router: ToolRouter<Self>,
 }
 

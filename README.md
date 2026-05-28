@@ -7,19 +7,18 @@ runtime dependencies on the host.
 
 ## Quickstart
 
-1. Install with the platform bootstrap script (see [`docs/quickstart.md`](docs/quickstart.md)).
-2. From your repository root:
-   ```
-   brain init
-   ```
-3. Resume the shared context at any time, from any supported tool:
-   ```
-   brain resume
-   ```
+1. **One command install** (registers MCP for Cursor when possible):
+   - Windows: `irm https://raw.githubusercontent.com/Oerum/oerum-agent/main/install/bootstrap.ps1 | iex`
+   - macOS/Linux: `curl -fsSL https://raw.githubusercontent.com/Oerum/oerum-agent/main/install/bootstrap.sh | sh`
+2. In your repository: `brain init`
+3. Restart your editor and use MCP tools (`brain_resume`, `brain_checkpoint`, …) or the CLI (`brain resume`).
+
+Details: [`docs/quickstart.md`](docs/quickstart.md), [`docs/mcp-setup.md`](docs/mcp-setup.md).
 
 ## Commands
 
-- `brain install` — first-time setup helper
+- `brain install` — register MCP config and print setup snippet
+- `brain mcp` — run the Model Context Protocol server (stdio)
 - `brain init` — seed `.brain/` in the current repository
 - `brain resume` — print the shared resume brief (active task, recent decisions, suggested next actions)
 - `brain checkpoint <note>` — append a free-form continuity note

@@ -4,6 +4,7 @@
 
 ```powershell
 irm https://raw.githubusercontent.com/Oerum/oerum-agent/main/install/bootstrap.ps1 | iex
+cd <your-repo>
 brain init
 ```
 
@@ -11,14 +12,20 @@ brain init
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Oerum/oerum-agent/main/install/bootstrap.sh | sh
+cd <your-repo>
 brain init
 ```
 
-Then run:
+Restart your editor so the **oerum-agent** MCP server loads. Agents should call `brain_resume` at session start and `brain_checkpoint` after milestones.
+
+CLI fallback:
 
 ```sh
 brain resume
+brain checkpoint "short note"
 ```
+
+See [`mcp-setup.md`](mcp-setup.md) for client-specific MCP configuration.
 
 If you get `404: Not Found` from the `raw.githubusercontent.com` URL, the
 repository/branch/path may differ or the repo may be private. In that case,

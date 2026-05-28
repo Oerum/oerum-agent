@@ -15,8 +15,6 @@ serde_json.workspace = true
 tracing-subscriber.workspace = true
 tokio.workspace = true
 brain-core = { path = "../brain-core" }
-brain-adapters = { path = "../brain-adapters" }
-brain-sync = { path = "../brain-sync" }
 rmcp = { version = "1.7", features = ["server", "macros", "transport-io"] }
 schemars = "0.8"
 serde = { workspace = true, features = ["derive"] }

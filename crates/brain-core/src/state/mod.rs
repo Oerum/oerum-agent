@@ -5,4 +5,4 @@ pub mod store;
 
 pub use events::{EventKind, StateEvent};
 pub use schema::{CommandResult, ResumeBrief, StateSnapshot, SNAPSHOT_HISTORY_CAP};
-pub use store::{AdapterEventRef, BrainStore};
+pub use store::BrainStore;

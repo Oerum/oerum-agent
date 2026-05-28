@@ -47,7 +47,6 @@ enum Command {
         value: String,
     },
     Doctor,
-    Sync,
 }
 
 #[tokio::main]
@@ -71,7 +70,6 @@ async fn main() -> Result<()> {
         }
         Command::Artifact { value } => commands::record::artifact(&cwd, value)?,
         Command::Doctor => commands::doctor::run(&cwd)?,
-        Command::Sync => commands::sync::run(&cwd).await?,
     }
     Ok(())
 }

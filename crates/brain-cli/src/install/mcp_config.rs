@@ -9,11 +9,8 @@ const SERVER_KEY: &str = "oerum-agent";
 pub fn cursor_mcp_path() -> Option<PathBuf> {
     #[cfg(windows)]
     {
-        std::env::var_os("USERPROFILE").map(|home| {
-            PathBuf::from(home)
-                .join(".cursor")
-                .join("mcp.json")
-        })
+        std::env::var_os("USERPROFILE")
+            .map(|home| PathBuf::from(home).join(".cursor").join("mcp.json"))
     }
     #[cfg(not(windows))]
     {
@@ -30,13 +27,11 @@ pub fn merge_cursor_mcp(brain_command: &Path, skip: bool) -> Result<Option<PathB
     };
 
     if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent)
-            .with_context(|| format!("create {}", parent.display()))?;
+        fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
     }
 
     let mut root: Value = if path.exists() {
-        let raw = fs::read_to_string(&path)
-            .with_context(|| format!("read {}", path.display()))?;
+        let raw = fs::read_to_string(&path).with_context(|| format!("read {}", path.display()))?;
         serde_json::from_str(&raw).with_context(|| format!("parse {}", path.display()))?
     } else {
         json!({})
@@ -61,8 +56,7 @@ pub fn merge_cursor_mcp(brain_command: &Path, skip: bool) -> Result<Option<PathB
     );
 
     let pretty = serde_json::to_string_pretty(&root)?;
-    fs::write(&path, format!("{pretty}\n"))
-        .with_context(|| format!("write {}", path.display()))?;
+    fs::write(&path, format!("{pretty}\n")).with_context(|| format!("write {}", path.display()))?;
     Ok(Some(path))
 }
 

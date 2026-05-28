@@ -14,8 +14,6 @@ use super::events::{EventKind, StateEvent};
 use super::migrate::ensure_supported;
 use super::schema::{CommandResult, ResumeBrief, StateSnapshot, SNAPSHOT_HISTORY_CAP};
 
-
-
 #[derive(Debug, Clone)]
 pub struct BrainStore {
     repo_root: PathBuf,
@@ -117,8 +115,6 @@ impl BrainStore {
             trace_id: Uuid::new_v4().to_string(),
         })
     }
-
-
 
     pub fn resume(&self) -> Result<ResumeBrief> {
         let snapshot = self.load_snapshot()?;
@@ -227,12 +223,7 @@ impl BrainStore {
         Ok(())
     }
 
-    fn atomic_write_event(
-        &self,
-        events_dir: &Path,
-        seq: u64,
-        event: &StateEvent,
-    ) -> Result<()> {
+    fn atomic_write_event(&self, events_dir: &Path, seq: u64, event: &StateEvent) -> Result<()> {
         let event_path = events_dir.join(format!("{seq:08}.json"));
         let tmp_path = events_dir.join(format!("{seq:08}.json.tmp.{}", Uuid::new_v4()));
         {

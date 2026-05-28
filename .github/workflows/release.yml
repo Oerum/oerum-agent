@@ -118,8 +118,32 @@ jobs:
           cat *.sha256 > checksums.txt
           ls -la
 
-      - name: Create GitHub release
+      - name: Check release state
+        id: release_state
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "${GITHUB_REF_NAME}" --json isDraft >/tmp/release.json 2>/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "is_draft=$(jq -r '.isDraft' /tmp/release.json)" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "is_draft=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload release assets
+        if: steps.release_state.outputs.exists == 'false' || steps.release_state.outputs.is_draft == 'true'
         uses: softprops/action-gh-release@v2
         with:
+          draft: true
           files: dist/*
           fail_on_unmatched_files: true
+
+      - name: Publish GitHub release
+        if: steps.release_state.outputs.exists == 'false' || steps.release_state.outputs.is_draft == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit "${GITHUB_REF_NAME}" --draft=false --latest

@@ -92,5 +92,12 @@ case ":$PATH:" in
     ;;
 esac
 
+if [ -x "${DEST}/brain" ]; then
+  "${DEST}/brain" install || true
+fi
+
 echo ""
-echo "Next: brain init"
+echo "Next:"
+echo "  1. Ensure ~/.brain/bin is on PATH (see above if needed)"
+echo "  2. cd <your-repo> && brain init"
+echo "  3. Restart your editor to load the oerum-agent MCP server"

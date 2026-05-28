@@ -16,6 +16,12 @@ asset for your platform yet.
 Maintainer fix:
 - Publish a GitHub release containing the platform archive and `.sha256`
   checksum file.
+- Quick path from this repository root:
+  ```powershell
+  .\scripts\release\publish-release.ps1 -Version v0.1.0
+  ```
+  This pushes the release tag and waits for `.github/workflows/release.yml`
+  to publish all platform assets.
 
 Local fallback:
 

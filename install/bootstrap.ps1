@@ -73,6 +73,16 @@ if (-not ($UserPath -split ";" | Where-Object { $_ -ieq $DestDir })) {
   Write-Host "Added $DestDir to user PATH (open a new shell to pick it up)."
 }
 
+$BrainExe = Join-Path $DestDir "brain.exe"
+if (Test-Path $BrainExe) {
+  & $BrainExe install
+} else {
+  Write-Host "Warning: brain.exe not found after install; run 'brain install' manually."
+}
+
 Write-Host ""
 Write-Host "Installed brain to $DestDir"
-Write-Host "Next: open a new PowerShell window and run 'brain init'"
+Write-Host "Next:"
+Write-Host "  1. Open a new shell"
+Write-Host "  2. cd <your-repo> && brain init"
+Write-Host "  3. Restart Cursor to load the oerum-agent MCP server"

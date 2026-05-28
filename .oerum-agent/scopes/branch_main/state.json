@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "in_progress",
+  "decisions": [],
+  "assumptions": [],
+  "tasks": [],
+  "openQuestions": [],
+  "touchedFiles": [],
+  "links": [],
+  "checkpoints": [
+    {
+      "id": "1048b517",
+      "message": "Auto-checkpoint from Cursor stop hook",
+      "at": "2026-05-28T10:50:05.1439381+00:00"
+    }
+  ],
+  "updatedAt": "2026-05-28T10:50:05.1442845+00:00"
+}

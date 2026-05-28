@@ -7,9 +7,9 @@ $Platform = "windows-x64"
 $Archive  = "brain-$Platform.zip"
 
 if ($Version -eq "latest") {
-  $BaseUrl = "https://github.com/oerumtechnologies/oerum-agent/releases/latest/download"
+  $BaseUrl = "https://github.com/Oerum/oerum-agent/releases/latest/download"
 } else {
-  $BaseUrl = "https://github.com/oerumtechnologies/oerum-agent/releases/download/$Version"
+  $BaseUrl = "https://github.com/Oerum/oerum-agent/releases/download/$Version"
 }
 
 $Url         = "$BaseUrl/$Archive"

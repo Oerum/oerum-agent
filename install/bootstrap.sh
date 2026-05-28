@@ -14,9 +14,9 @@ PLATFORM="${OS}-${ARCH}"
 ARCHIVE="brain-${PLATFORM}.tar.gz"
 
 if [ "$VERSION" = "latest" ]; then
-  BASE_URL="https://github.com/oerumtechnologies/oerum-agent/releases/latest/download"
+  BASE_URL="https://github.com/Oerum/oerum-agent/releases/latest/download"
 else
-  BASE_URL="https://github.com/oerumtechnologies/oerum-agent/releases/download/${VERSION}"
+  BASE_URL="https://github.com/Oerum/oerum-agent/releases/download/${VERSION}"
 fi
 
 URL="${BASE_URL}/${ARCHIVE}"

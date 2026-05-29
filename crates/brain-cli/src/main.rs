@@ -52,6 +52,7 @@ enum Command {
 #[tokio::main]
 async fn main() -> Result<()> {
     tracing_subscriber::fmt()
+        .with_ansi(false)
         .with_target(false)
         .with_writer(std::io::stderr)
         .init();
